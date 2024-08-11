@@ -16,3 +16,6 @@ modules/gateways/
 
 For more information, please refer to the online documentation: 
  * https://developer.flutterwave.com/docs
+
+## Contributing
+If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
