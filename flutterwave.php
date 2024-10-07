@@ -18,118 +18,118 @@
 
 
 if (!defined("WHMCS")) {
-    die("This file cannot be accessed directly");
+  die("This file cannot be accessed directly");
 }
 
 function flutterwave_MetaData()
 {
-    return array(
-        'DisplayName' => 'Flutterwave',
-        'APIVersion' => '3.0',
-        'DisableLocalCredtCardInput' => true,
-        'TokenisedStorage' => false,
-    );
+  return array(
+    'DisplayName' => 'Flutterwave',
+    'APIVersion' => '3.0',
+    'DisableLocalCredtCardInput' => true,
+    'TokenisedStorage' => false,
+  );
 }
 
 function flutterwave_config()
 {
-    return array(
-        'FriendlyName' => array(
-            'Type' => 'System',
-            'Value' => 'Flutterwave',
-        ),
+  return array(
+    'FriendlyName' => array(
+      'Type' => 'System',
+      'Value' => 'Flutterwave',
+    ),
 
-        'cBname' => array(
-            'FriendlyName' => 'Flutterwave Business Name',
-            'Type' => 'text',
-            'Size' => '50',
-            'Default' => '',
-            'Description' => 'Enter business name here',
-        ),
+    'cBname' => array(
+      'FriendlyName' => 'Flutterwave Business Name',
+      'Type' => 'text',
+      'Size' => '50',
+      'Default' => '',
+      'Description' => 'Enter business name here',
+    ),
 
-        'cBdescription' => array(
-            'FriendlyName' => 'Business Description',
-            'Type' => 'text',
-            'Size' => '50',
-            'Default' => '',
-            'Description' => 'Enter business description here',
-        ),
+    'cBdescription' => array(
+      'FriendlyName' => 'Business Description',
+      'Type' => 'text',
+      'Size' => '50',
+      'Default' => '',
+      'Description' => 'Enter business description here',
+    ),
 
-        'whmcsLogo' => array(
-            'FriendlyName' => 'Icon',
-            'Type' => 'text',
-            'Size' => '80',
-            'Default' => '',
-            'Description' => 'Enter the link to your site icon (square)',
-        ),
+    'whmcsLogo' => array(
+      'FriendlyName' => 'Icon',
+      'Type' => 'text',
+      'Size' => '80',
+      'Default' => '',
+      'Description' => 'Enter the link to your site icon (square)',
+    ),
 
-        'publicKey' => array(
-            'FriendlyName' => 'Public Key',
-            'Type' => 'text',
-            'Size' => '50',
-            'Default' => '',
-            'Description' => 'Enter public key here',
-        ),
-        'secretKey' => array(
-            'FriendlyName' => 'Secret Key',
-            'Type' => 'text',
-            'Size' => '50',
-            'Default' => '',
-            'Description' => 'Enter secret key here',
-        ),
+    'publicKey' => array(
+      'FriendlyName' => 'Public Key',
+      'Type' => 'text',
+      'Size' => '50',
+      'Default' => '',
+      'Description' => 'Enter public key here',
+    ),
+    'secretKey' => array(
+      'FriendlyName' => 'Secret Key',
+      'Type' => 'text',
+      'Size' => '50',
+      'Default' => '',
+      'Description' => 'Enter secret key here',
+    ),
 
-        'payButtonText' => array(
-            'FriendlyName' => 'Pay Button Text',
-            'Type' => 'text',
-            'Size' => '25',
-            'Default' => 'Pay Now',
-            'Description' => 'Text to display on your payment button',
-        ),
+    'payButtonText' => array(
+      'FriendlyName' => 'Pay Button Text',
+      'Type' => 'text',
+      'Size' => '25',
+      'Default' => 'Pay Now',
+      'Description' => 'Text to display on your payment button',
+    ),
 
-        'gatewayLogs' => array(
-            'FriendlyName' => 'Gateway logs',
-            'Type' => 'yesno',
-            'Description' => 'Select to enable gateway logs',
-            'Default' => '0'
-        ),
-    );
+    'gatewayLogs' => array(
+      'FriendlyName' => 'Gateway logs',
+      'Type' => 'yesno',
+      'Description' => 'Select to enable gateway logs',
+      'Default' => '0'
+    ),
+  );
 }
 
 
 function flutterwave_link($params)
 {
 
-    // Gateway Configuration Parameters
-    $publicKey = $params['publicKey'];
-    $secretKey = $params['secretKey'];
-    $companyName = $params['cBname'];
-    $companyDescription = $params['cBdescription'];
-    $logo = $params['whmcsLogo'];
-    $payButtonText = $params['payButtonText'];
+  // Gateway Configuration Parameters
+  $publicKey = $params['publicKey'];
+  $secretKey = $params['secretKey'];
+  $companyName = $params['cBname'];
+  $companyDescription = $params['cBdescription'];
+  $logo = $params['whmcsLogo'];
+  $payButtonText = $params['payButtonText'];
 
-    // Invoice Parameters
-    $invoiceId = $params['invoiceid'];
-    $description = $params["description"];
-    $amount = $params['amount'];
-    $currencyCode = $params['currency'];
+  // Invoice Parameters
+  $invoiceId = $params['invoiceid'];
+  $description = $params["description"];
+  $amount = $params['amount'];
+  $currencyCode = $params['currency'];
 
-    // Client Parameters
-    $firstname = $params['clientdetails']['firstname'];
-    $lastname = $params['clientdetails']['lastname'];
-    $email = $params['clientdetails']['email'];
-    $phone = $params['clientdetails']['phonenumber'];
+  // Client Parameters
+  $firstname = $params['clientdetails']['firstname'];
+  $lastname = $params['clientdetails']['lastname'];
+  $email = $params['clientdetails']['email'];
+  $phone = $params['clientdetails']['phonenumber'];
 
-    // System Parameters
-    $systemUrl = $params['systemurl'];
-    $langPayNow = $params['langpaynow'];
-    $moduleName = $params['paymentmethod'];
-    $returnUrl = "'.$systemUrl.'viewinvoice.php?id='.$invoiceId.'";
-    $redirectUrl = $systemUrl . 'modules/gateways/callback/' . $moduleName . '.php';
+  // System Parameters
+  $systemUrl = $params['systemurl'];
+  $langPayNow = $params['langpaynow'];
+  $moduleName = $params['paymentmethod'];
+  $returnUrl = "'.$systemUrl.'viewinvoice.php?id='.$invoiceId.'";
+  $redirectUrl = $systemUrl . 'modules/gateways/callback/' . $moduleName . '.php';
 
 
-    $htmlOutput = '<script src="https://checkout.flutterwave.com/v3.js"></script>';
-    $htmlOutput .= '<form>';
-    $htmlOutput .= '<button type="button" id="start-payment-button" 
+  $htmlOutput = '<script src="https://checkout.flutterwave.com/v3.js"></script>';
+  $htmlOutput .= '<form>';
+  $htmlOutput .= '<button type="button" id="start-payment-button" 
     style="cursor: pointer;
     position: relative;
     background-color: #ff9b00;
@@ -146,11 +146,11 @@ function flutterwave_link($params)
   <rect x="3" y="6" width="18" height="12" rx="2" ry="2" />
   <line x1="3" y1="10" x2="21" y2="10" />
   <line x1="3" y1="14" x2="21" y2="14" />
-</svg>&nbsp;
+    </svg>&nbsp;
 ' . $langPayNow . '
     </button>';
-    $htmlOutput .= '</form>';
-    $htmlOutput .= '<script>
+  $htmlOutput .= '</form>';
+  $htmlOutput .= '<script>
           function makePayment() {
             FlutterwaveCheckout({
               public_key: "' . $publicKey . '",
@@ -162,7 +162,6 @@ function flutterwave_link($params)
                 consumer_id: "' . $invoiceId . '",
                 consumer_mac: "' . $_SERVER['REMOTE_ADDR'] . '",
               },
-              redirect_url: "' . $redirectUrl . '",
               customer: {
                 email: "' . $email . '",
                 phone_number: "' . $phone . '",
@@ -175,11 +174,14 @@ function flutterwave_link($params)
               },
               onclose: function() {
                 window.location.href = "' . $systemUrl . 'viewinvoice.php?id=' . $invoiceId . '";
-              }
+              },
+              callback: function() {
+                window.location.href = "' . $redirectUrl . '?id=' . $invoiceId . '";
+               }
             });
           }
         </script>';
 
 
-    return $htmlOutput;
+  return $htmlOutput;
 }
