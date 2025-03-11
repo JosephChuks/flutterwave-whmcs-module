@@ -1,7 +1,11 @@
 <?php
 
 /**
+<<<<<<< HEAD
  * Flutterwave WHMCS Payment Gateway Module v1.2.1
+=======
+ * Flutterwave WHMCS Payment Gateway Module v2.0
+>>>>>>> 27c235b (Updated Flutterwave WHMCS module with latest fixes and improvements)
  *
  * This Payment Gateway module allows you to integrate Flutterwave payment solutions with the
  * WHMCS platform.
@@ -12,7 +16,7 @@
  * 
  * @author Joseph Chuks <info@josephchuks.com>
  *
- * @copyright Copyright (c) Joseph Chuks 2024
+ * @copyright Copyright (c) Joseph Chuks 2025
  */
 
 
@@ -47,6 +51,7 @@ function flutterwave_config()
             'Description' => 'Enter business name here',
         ),
 
+<<<<<<< HEAD
         'cBdescription' => array(
             'FriendlyName' => 'Business Description',
             'Type' => 'text',
@@ -93,12 +98,37 @@ function flutterwave_config()
             'Default' => '0'
         ),
     );
+=======
+    'whmcsLogo' => array(
+      'FriendlyName' => 'Icon',
+      'Type' => 'text',
+      'Size' => '80',
+      'Default' => '',
+      'Description' => 'Enter the link to your site icon (square)',
+    ),
+    'secretKey' => array(
+      'FriendlyName' => 'Secret Key',
+      'Type' => 'text',
+      'Size' => '50',
+      'Default' => '',
+      'Description' => 'Enter secret key here',
+    ),
+
+    'gatewayLogs' => array(
+      'FriendlyName' => 'Gateway logs',
+      'Type' => 'yesno',
+      'Description' => 'Select to enable gateway logs',
+      'Default' => '0'
+    ),
+  );
+>>>>>>> 27c235b (Updated Flutterwave WHMCS module with latest fixes and improvements)
 }
 
 
 function flutterwave_link($params)
 {
 
+<<<<<<< HEAD
     // Gateway Configuration Parameters
     $publicKey = $params['publicKey'];
     $secretKey = $params['secretKey'];
@@ -179,7 +209,87 @@ function flutterwave_link($params)
             });
           }
         </script>';
+=======
+  // Gateway Configuration Parameters
+  $secretKey = $params['secretKey'];
+  $companyName = $params['cBname'];
+  $logo = $params['whmcsLogo'];
 
 
+  // Invoice Parameters
+  $invoiceId = $params['invoiceid'];
+  $description = $params["description"];
+  $amount = $params['amount'];
+  $currency = $params['currency'];
+
+  // Client Parameters
+  $name = $params['clientdetails']['firstname'] . ' ' . $params['clientdetails']['lastname'];
+  $email = $params['clientdetails']['email'];
+  $phone = $params['clientdetails']['phonenumber'];
+
+  // System Parameters
+  $systemUrl = $params['systemurl'];
+  $moduleName = $params['paymentmethod'];
+  $returnUrl = $systemUrl . 'clientarea.php?action=invoices';
+  $redirectUrl = $systemUrl . 'modules/gateways/callback/' . $moduleName . '.php';
+
+
+  $url = "https://api.flutterwave.com/v3/payments";
+>>>>>>> 27c235b (Updated Flutterwave WHMCS module with latest fixes and improvements)
+
+  $headers = [
+    "Authorization: Bearer $secretKey",
+    "Content-Type: application/json"
+  ];
+
+<<<<<<< HEAD
     return $htmlOutput;
+=======
+  $postData = [
+    "tx_ref" => "$invoiceId",
+    "amount" => "$amount",
+    "currency" => "$currency",
+    "redirect_url" => "$redirectUrl",
+    "customer" => [
+      "email" => "$email",
+      "name" => "$name",
+      "phonenumber" => "$phone"
+    ],
+    "customizations" => [
+      "title" => "$companyName",
+      "description" => "$description",
+      "logo" => "$logo"
+    ]
+  ];
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+  curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+  $response = curl_exec($ch);
+  $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+  if (curl_errno($ch)) {
+    echo "cURL Error: " . curl_error($ch);
+  }
+
+  curl_close($ch);
+
+  $result = json_decode($response, true);
+
+  if ($httpCode === 200 && isset($result["status"]) && $result["status"] === "success" && isset($result["data"]["link"])) {
+    header("Location: " . $result["data"]["link"]);
+    exit;
+  } else {
+    $error = isset($result["message"]) ? $result["message"] : "Payment failed";
+    echo '
+    <script>
+    alert("Payment failed: ' . $error . '");
+    window.location.href = "' . $returnUrl . '";
+    </script>';
+  }
+>>>>>>> 27c235b (Updated Flutterwave WHMCS module with latest fixes and improvements)
 }

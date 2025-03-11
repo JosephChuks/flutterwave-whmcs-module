@@ -1,0 +1,25 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-gateways",
+  "name": "flutterwave",
+  "license": "proprietary",
+  "category": "payments",
+  "description": {
+    "name": "Flutterwave",
+    "tagline": "Flutterwave WHMCS Payment Gateway Module",
+    "long": "This Payment Gateway module allows you to integrate Flutterwave payment solutions with the WHMCS platform."
+  },
+  "support": {
+    "homepage": "https:\/\/www.flutterwave.com\/",
+    "docs_url": "https:\/\/www.github.com\/JosephChuks\/flutterwave-whmcs-module"
+  },
+  "logo": {
+    "filename": "logo.png"
+  },
+  "authors": [
+    {
+      "name": "Joseph Chuks",
+      "homepage": "https:\/\/www.github.com\/JosephChuks"
+    }
+  ]
+}
